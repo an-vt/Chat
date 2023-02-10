@@ -10,28 +10,28 @@ services:
     restart: always # because it is routing traffic to our entire app
     build:
       dockerfile: Dockerfile
-      context: ../nginx
+      context: ./nginx
     ports:
       - 80:80
   api:
     image: api
     container_name: api
-    build: ../Chat_BE
+    build: ./Chat_BE
     volumes:
-      - ../Chat_BE:/usr/src/app
+      - ./Chat_BE:/usr/src/app
     ports:
       - 1337:1337
     restart: on-failure
     env_file:
-      - ../Chat_BE/.env
+      - ./Chat_BE/.env
   client:
     image: client
     container_name: client
-    build: ../Chat_FE_React
+    build: ./Chat_FE_React
     volumes:
       - /Chat_FE_React:/app/node_modules
     ports:
       - 3001:3001
     restart: on-failure
     env_file:
-      - ../Chat_FE_React/.env
+      - ./Chat_FE_React/.env
