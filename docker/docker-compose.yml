@@ -5,16 +5,17 @@ services:
     image: nginx
     container_name: nginx
     depends_on:
-      - frontend
+      - client
+      - api
     restart: always # because it is routing traffic to our entire app
     build:
       dockerfile: Dockerfile
       context: ../nginx
     ports:
       - 80:80
-  backend:
-    image: backend
-    container_name: backend
+  api:
+    image: api
+    container_name: api
     build: ../Chat_BE
     volumes:
       - ../Chat_BE:/usr/src/app
@@ -23,9 +24,9 @@ services:
     restart: on-failure
     env_file:
       - ../Chat_BE/.env
-  frontend:
-    image: frontend
-    container_name: frontend
+  client:
+    image: client
+    container_name: client
     build: ../Chat_FE_React
     volumes:
       - /Chat_FE_React:/app/node_modules
