@@ -6,16 +6,16 @@ services:
     container_name: nginx
     depends_on:
       - client
-      - api
+      - oauth
     restart: always # because it is routing traffic to our entire app
     build:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
       - 80:80
-  api:
-    image: api
-    container_name: api
+  oauth:
+    image: oauth
+    container_name: oauth
     build: ./Chat_BE
     volumes:
       - ./Chat_BE:/usr/src/app
