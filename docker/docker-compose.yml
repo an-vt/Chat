@@ -5,7 +5,6 @@ services:
     image: nginx
     container_name: nginx
     depends_on:
-      - backend
       - frontend
     restart: always # because it is routing traffic to our entire app
     build:
