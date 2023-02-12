@@ -2,36 +2,42 @@ version: "3.3"
 
 services:
   nginx:
-    image: nginx
-    container_name: nginx
     depends_on:
       - client
-      - oauth
+      - api
     restart: always # because it is routing traffic to our entire app
     build:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
       - 80:80
-  oauth:
-    image: oauth
-    container_name: oauth
+    networks:
+      - api-networks
+  api:
+    container_name: api
     build: ./Chat_BE
-    volumes:
-      - ./Chat_BE:/usr/src/app
     ports:
       - 1337:1337
     restart: on-failure
     env_file:
       - ./Chat_BE/.env
+    networks:
+      - api-networks
   client:
-    image: client
     container_name: client
     build: ./Chat_FE_React
     volumes:
       - /Chat_FE_React:/app/node_modules
-    ports:
-      - 3001:3001
+    # ports:
+    #   - 3000:3000
     restart: on-failure
+    depends_on:
+      - api
     env_file:
       - ./Chat_FE_React/.env
+    networks:
+      - api-networks
+
+networks:
+  api-networks:
+    driver: bridge

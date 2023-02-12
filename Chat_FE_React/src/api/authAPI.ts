@@ -1,7 +1,7 @@
 import { AuthLogin, AuthRegister } from "../models";
 import axiosClient from "./axiosClient";
 
-const AUTH_ENDPOINT = "/oauth";
+const AUTH_ENDPOINT = "/api/oauth/v1";
 const authApi = {
   login(data: AuthLogin) {
     const url = `${AUTH_ENDPOINT}/token`;

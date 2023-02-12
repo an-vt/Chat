@@ -29,7 +29,7 @@ app.use(
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   })
 );
-app.use("/api", deserializeUser);
+app.use("/api/v1", deserializeUser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(router);

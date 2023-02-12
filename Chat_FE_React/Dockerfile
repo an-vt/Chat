@@ -13,6 +13,6 @@ RUN yarn run build
 
 # nginx state for serving content
 FROM nginx:alpine
-EXPOSE 3001
+EXPOSE 3000
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build/ /usr/share/nginx/html
