@@ -18,7 +18,7 @@ services:
     build: ./Chat_BE
     ports:
       - 1337:1337
-    restart: on-failure
+    restart: always
     env_file:
       - ./Chat_BE/.env
     networks:
@@ -30,7 +30,7 @@ services:
       - /Chat_FE_React:/app/node_modules
     # ports:
     #   - 3000:3000
-    restart: on-failure
+    restart: always
     depends_on:
       - api
     env_file:
