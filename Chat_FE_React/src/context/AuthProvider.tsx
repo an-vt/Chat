@@ -68,9 +68,25 @@ export function AuthProvider({
       });
   }, []);
 
+  const { isLoading: isLoadingTutorials, refetch: getAllTutorials } = useQuery(
+    "query-tutorials",
+    async () => await userApi.getMe(),
+    {
+      enabled: false,
+      onSuccess: (res) => {
+        console.log("🚀 ~ file: AuthProvider.tsx:81 ~ res:", res);
+      },
+      onError: (err) => {
+        console.log("🚀 ~ file: AuthProvider.tsx:84 ~ err:", err);
+      },
+    },
+  );
+  console.log(isLoadingTutorials);
+
   useEffect(() => {
     if (tokenAuthenticated) {
       fetchDataUser();
+      getAllTutorials();
     }
   }, [tokenAuthenticated, fetchDataUser]);
 

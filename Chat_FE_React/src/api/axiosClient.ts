@@ -19,7 +19,7 @@ import {
 const API_URI = process.env.REACT_APP_API_URI;
 
 const axiosClient = axios.create({
-  // baseURL: API_URI,
+  baseURL: API_URI,
   withCredentials: false, // Window Authentification
   headers: {
     "Content-Type": "application/json",
