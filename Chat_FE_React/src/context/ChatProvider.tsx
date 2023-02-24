@@ -138,7 +138,9 @@ export default function ChatProvider({
 
   useEffect(() => {
     if (userInfo?._id) {
-      socket.current = io(process.env.REACT_APP_API_URI as string);
+      socket.current = io(
+        `${process.env.REACT_APP_API_URI as string}/sockjs-node`,
+      );
 
       socket.current.emit("connected-user", userInfo._id);
     }
