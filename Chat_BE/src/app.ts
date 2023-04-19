@@ -1,13 +1,15 @@
 import config from "config";
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
+import fs from "fs";
+import https from "https";
 import { Server } from "socket.io";
 import connect from "./db/connect";
 import log from "./logger";
 import { deserializeUser } from "./middleware";
 import router from "./routes";
 import { onConnection } from "./socket";
-import dotenv from "dotenv";
 
 dotenv.config();
 const globalAny: any = global;
@@ -34,8 +36,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(router);
 
-const server = app.listen(port, async () => {
-  log.info(`Server listing at http://localhost:${port}`);
+const server = https.createServer(
+  {
+    key: fs.readFileSync(`${__dirname}/ssl/test_key.key`),
+    cert: fs.readFileSync(`${__dirname}/ssl/test_cert.crt`),
+
+    requestCert: false,
+    rejectUnauthorized: false,
+  },
+  app
+);
+server.listen(port, async () => {
+  log.info(`Server listing at https://localhost:${port}`);
 
   await connect();
 });
